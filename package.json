@@ -1,0 +1,25 @@
+{
+  "name": "hapiyarnapidemo",
+  "version": "1.0.0",
+  "description": "Writing Powerful Node apis with Hapi, MongoDB and yarn",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harishsainik/hapiyarnapidemo.git"
+  },
+  "keywords": [
+    "Hapi",
+    "Yarn",
+    "MongoDB",
+    "GraphQL"
+  ],
+  "author": "Harish Saini",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/harishsainik/hapiyarnapidemo/issues"
+  },
+  "homepage": "https://github.com/harishsainik/hapiyarnapidemo#readme"
+}
