@@ -4,6 +4,8 @@
   "description": "Writing Powerful Node apis with Hapi, MongoDB and yarn",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon index.js",
+    "start":"node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,5 +23,12 @@
   "bugs": {
     "url": "https://github.com/harishsainik/hapiyarnapidemo/issues"
   },
-  "homepage": "https://github.com/harishsainik/hapiyarnapidemo#readme"
+  "homepage": "https://github.com/harishsainik/hapiyarnapidemo#readme",
+  "dependencies": {
+    "hapi": "^18.1.0",
+    "nodemon": "^1.19.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.0.1"
+  }
 }
