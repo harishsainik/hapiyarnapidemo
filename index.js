@@ -1,6 +1,12 @@
 const hapi = require('hapi');
 const mongoose = require('mongoose');
 const Paintings = require('./models/Paintings');
+const {graphqlHapi, graphiqlHapi} = require('apollo-server-hapi');
+const Inert = require('inert');
+const Vision = require('vision');
+const HapiSwagger = require('hapi-swagger');
+const schema = require('./graphql/schema');
+const Package = require('./package');
 
 const server = hapi.server({
     port: 4000,
@@ -12,6 +18,47 @@ mongoose.connect('mongodb://harish:Fire!123@ds123844.mlab.com:23844/graphqldb', 
 mongoose.connection.once('open', ()=> console.log('Mongoose connected.'));
 
 (async() => {
+    
+    await server.register([
+        Inert,
+        Vision,
+        {
+            plugin: HapiSwagger,
+            Options: {
+                info: {
+                    title: Package.name, 
+                    version: Package.version
+                }
+            }
+        }
+    ])
+
+	await server.register({
+		plugin: graphiqlHapi,
+		options: {
+			path: '/graphiql',
+			graphiqlOptions: {
+				endpointURL: '/graphql'
+			},
+			route: {
+				cors: true
+			}
+		}
+	});
+
+    await server.register({
+        plugin: graphqlHapi, 
+        options: {
+            path: '/graphql',
+            graphqlOptions: {
+                schema
+            }
+        },
+        route: {
+            cors: true
+        }
+    });
+
     server.route([
         {
             method: 'GET',
@@ -21,17 +68,21 @@ mongoose.connection.once('open', ()=> console.log('Mongoose connected.'));
         {
             method: 'GET',
             path: '/api/v1/paintings',
+            config: {
+                description: 'Get all paintings', 
+                tags: ['api', 'getAll']
+            },
             handler: () => Paintings.find()
         },
         {
             method: 'POST', 
             path: '/api/v1/paintings',
-            handler: (req,res) => {
-                const {name, url, techniques } = req.payload;
+            handler: (req) => {
+                const {name, url, technique } = req.payload;
                 const painting = new Paintings({
                     name,
                     url,
-                    techniques
+                    technique
                 });
                 return painting.save();
             }
